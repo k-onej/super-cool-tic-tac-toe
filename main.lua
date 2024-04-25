@@ -8,6 +8,7 @@ function game:load()
     }
     self.cell_size = 128
     self.winner = "none"
+    self.tie = false
     self.turn = "o"
 end
 
@@ -19,6 +20,7 @@ function game:update(dt)
             {"b", "b", "b"}
         }
         self.winner = "none"
+        self.tie = false
         self.turn = "o"
     end
 
@@ -56,8 +58,8 @@ function game:update(dt)
                 self.winner = "o"
             
             -- draw
-            elseif self:checkTable(self.board[1], "b") and self:checkTable(self.board[2], "b") and self:checkTable(self.board[3], "b") then
-                self.winner = "draw"
+            elseif self:checkTable(self.board[1], "b") and self:checkTable(self.board[2], "b") and self:checkTable(self.board[3], "b") and self.winner == "none" then
+                self.tie = true
             end
         end
     end
@@ -95,7 +97,7 @@ function game:draw()
         love.graphics.print("x wins!!!", self.cell_size/2, self.cell_size/4, 0, self.cell_size/32)
     elseif self.winner == "o" then
         love.graphics.print("o wins!!!", self.cell_size/2, self.cell_size/4, 0, self.cell_size/32)
-    elseif self.winner == "draw" then
+    elseif self.tie then
         love.graphics.print("draw", self.cell_size/2, self.cell_size/4, 0, self.cell_size/32)
     else
         if self.turn == "x" then
